@@ -6,23 +6,27 @@ import android.util.Log
 import io.realm.Realm
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //データベースに登録
         Realm.init(this)
-        val mRealm = Realm.getDefaultInstance()
+        val mRealm :Realm = Realm.getDefaultInstance()
         val typeIdList = mutableListOf(1, 2, 3)
         val typeNameList = mutableListOf("ほのお", "みず", "くさ")
-        for (i in typeIdList.indices) {
-            Save(mRealm, typeIdList[i], typeNameList[i])
+        try {
+            for (i in typeIdList.indices) {
+                Save(mRealm, typeIdList[i], typeNameList[i])
+            }
+        }catch (e:Exception){
         }
-
         //データ読み出し
         val TypeDataList: List<TypeData> = Read(mRealm)
         for (i in TypeDataList.indices) {
             Log.d("result", "typeId:" + TypeDataList[i].typeId + "\ttypeName" + TypeDataList[i].typeName)
         }
+        mRealm.close()
     }
 
     fun Read(mRealm: Realm): List<TypeData> {
