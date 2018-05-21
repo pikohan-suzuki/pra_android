@@ -11,8 +11,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var fileName = this.assets.open("type.txt")  //asserts/type.txt　を指定
-        var fileReader = BufferedReader(InputStreamReader(fileName))
+        val fileName = this.assets.open("type.txt")  //asserts/type.txt　を指定
+        val fileReader = BufferedReader(InputStreamReader(fileName))
         var str : String?
         try {
             str = fileReader.readLine() //1行分をstrに代入
