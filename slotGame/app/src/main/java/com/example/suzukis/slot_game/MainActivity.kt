@@ -1,16 +1,12 @@
 package com.example.suzukis.slot_game
 
-import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import java.util.Calendar.MILLISECOND
 
 class MainActivity : AppCompatActivity() {
     lateinit var numberImageView1: ImageView
@@ -40,53 +36,53 @@ class MainActivity : AppCompatActivity() {
         resetButton = findViewById(R.id.resetButton) as Button
 
         stopButton1.setOnClickListener() {
-            slot1Flg =1
-            slot1=setImage(slot1,numberImageView1,stopButton1)
-            if(slot1Flg==1 && slot2Flg==1 && slot3Flg==1){
-                answer(slot1,slot2,slot3)
+            slot1Flg = 1
+            slot1 = setImage(slot1, numberImageView1, stopButton1)
+            if (slot1Flg == 1 && slot2Flg == 1 && slot3Flg == 1) {
+                answer(slot1, slot2, slot3)
             }
         }
         stopButton2.setOnClickListener() {
             slot2Flg = 1
-            slot2=setImage(slot2,numberImageView2,stopButton2)
-            if(slot1Flg==1 && slot2Flg==1 && slot3Flg==1){
-                answer(slot1,slot2,slot3)
+            slot2 = setImage(slot2, numberImageView2, stopButton2)
+            if (slot1Flg == 1 && slot2Flg == 1 && slot3Flg == 1) {
+                answer(slot1, slot2, slot3)
             }
         }
         stopButton3.setOnClickListener() {
             slot3Flg = 1
-            slot3=setImage(slot3,numberImageView3,stopButton3)
-            if(slot1Flg==1 && slot2Flg==1 && slot3Flg==1){
-                answer(slot1,slot2,slot3)
+            slot3 = setImage(slot3, numberImageView3, stopButton3)
+            if (slot1Flg == 1 && slot2Flg == 1 && slot3Flg == 1) {
+                answer(slot1, slot2, slot3)
             }
         }
-        resetButton.setOnClickListener(){
+        resetButton.setOnClickListener() {
             numberImageView1.setImageResource(R.drawable.doroid)
             numberImageView2.setImageResource(R.drawable.doroid)
             numberImageView3.setImageResource(R.drawable.doroid)
             stopButton1.setVisibility(View.VISIBLE)
             stopButton2.setVisibility(View.VISIBLE)
             stopButton3.setVisibility(View.VISIBLE)
-            slot1=0
-            slot2=0
-            slot3=0
-            slot1Flg=-1
-            slot2Flg=-1
-            slot3Flg=-1
+            slot1 = 0
+            slot2 = 0
+            slot3 = 0
+            slot1Flg = -1
+            slot2Flg = -1
+            slot3Flg = -1
             resetButton.setVisibility(View.INVISIBLE)
         }
     }
 
-    fun answer(slot1 :Int,slot2:Int,slot3:Int){
-        if(slot1==0 && slot1==slot2 && slot2==slot3){
-            Toast.makeText(this,"大当たり！",Toast.LENGTH_LONG).show()
-        }else if(slot1==slot2 && slot2==slot3){
-            Toast.makeText(this,"当たり！",Toast.LENGTH_LONG).show()
+    fun answer(slot1: Int, slot2: Int, slot3: Int) {
+        if (slot1 == 0 && slot1 == slot2 && slot2 == slot3) {
+            Toast.makeText(this, "大当たり！", Toast.LENGTH_LONG).show()
+        } else if (slot1 == slot2 && slot2 == slot3) {
+            Toast.makeText(this, "当たり！", Toast.LENGTH_LONG).show()
         }
         resetButton.setVisibility(View.VISIBLE)
     }
 
-    fun setImage( slot : Int,numberImage : ImageView,stopButton : Button) : Int{
+    fun setImage(slot: Int, numberImage: ImageView, stopButton: Button): Int {
         val calendar = Calendar.getInstance()
         val ms = calendar.get(Calendar.MILLISECOND)
         var slotSub = slot
