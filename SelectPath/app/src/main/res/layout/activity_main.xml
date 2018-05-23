@@ -16,14 +16,16 @@
         android:layout_gravity="center_horizontal"/>
 
     <EditText
-        android:id="@+id/Destination"
+        android:id="@+id/destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:hint="目的地を指定 ex:36" />
     <Button
-        android:id="@+id/calcButton"
+        android:id="@+id/searchButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text ="検索"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
