@@ -2,25 +2,21 @@ package com.example.suzukis.selectpath
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.nio.Buffer
-import kotlin.math.sign
-import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
     var directionList = mutableListOf<Int>()
     var minDirectionList = mutableListOf<Int>()
     var minLength: Int = 99999
-    val NumberOfStreet = 3
+    val NumberOfStreet = 52
     var streetPath = Array(NumberOfStreet, { Array(NumberOfStreet, { 0 }) })
     val streetLength = Array(NumberOfStreet, { 0 })
-
+    var sum =0
 
     lateinit var locationEditText: EditText
     lateinit var destinationEditText: EditText
@@ -33,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         destinationEditText = findViewById(R.id.destination) as EditText
         searchButton = findViewById(R.id.searchButton) as Button
 
-        val fileName = this.assets.open("test.txt")
+        val fileName = this.assets.open("str8-1.txt")
         val fileReader = BufferedReader(InputStreamReader(fileName))
         var str: String?
         var strList: List<String>
@@ -51,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
         }
 
-        val fileName2 = this.assets.open("testLength.txt")
+        val fileName2 = this.assets.open("streetLength.txt")
         val fileReader2 = BufferedReader(InputStreamReader(fileName2))
         var length: Int?
         var number = 0
@@ -68,14 +64,23 @@ class MainActivity : AppCompatActivity() {
         searchButton.setOnClickListener() {
             val loca: String? = locationEditText.text.toString()
             val dest: String? = destinationEditText.text.toString()
-            if (loca != null && dest != null) {1
+            if (loca != null && dest != null) {
                 val location: Int = loca.toInt() - 1
                 var destination: Int = dest.toInt() - 1
+                minLength = 99999
+                sum =0
+                directionList.clear()
                 minDirectionList.clear()
                 directionList.add(location)
+                sum+=streetLength[location]
                 searchRoot(destination)
-                if(minDirectionList[minDirectionList.size -1] == destination){
-                    Toast.makeText(this,"success",Toast.LENGTH_LONG).show()
+                if(minDirectionList[minDirectionList.size -1] == destination) {
+                    Toast.makeText(this, "success", Toast.LENGTH_LONG).show()
+                    for (i in minDirectionList.indices) {
+                        minDirectionList[i]++
+                    }
+                    println(minDirectionList)
+                    println(minLength)
                 }else{
                     Toast.makeText(this,"failed",Toast.LENGTH_LONG).show()
                 }
@@ -106,18 +111,23 @@ class MainActivity : AppCompatActivity() {
                 }
                 if(existFlg == false) {
                     directionList.add(i)
+                    sum+=streetLength[i]
                     if(i == destination){
-                        minDirectionList.clear()
-                        for(j in directionList.indices) {
-                            minDirectionList.add(directionList[j])
+                        if(sum < minLength) {
+                            minLength = sum
+                            minDirectionList.clear()
+                            for (j in directionList.indices) {
+                                minDirectionList.add(directionList[j])
+                            }
                         }
-                        return
+                        directionList.removeAt(directionList.size -1)
+                        sum-=streetLength[i]
                     }else{
                         searchRoot(destination)
                         i=directionList[directionList.size -1]
+                        sum -= streetLength[i]
                         directionList.removeAt(directionList.size -1)
                         location = directionList[directionList.size -1]
-                        Toast.makeText(this,"aaa",Toast.LENGTH_LONG).show()
                     }
                 }
             }
