@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
         //データベースに登録
         Realm.init(this)
         val mRealm :Realm = Realm.getDefaultInstance()
-        val typeIdList = mutableListOf(1, 2, 3)
-        val typeNameList = mutableListOf("ほのお", "みず", "くさ")
+        val typeIdList = mutableListOf(1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)
+        val typeNameList = mutableListOf("ノーマル","ほのお", "みず","でんき", "くさ","こおり","かくとう","どく","じめん","ひこう","エスパー","むし","いわ","ゴースト","ドラゴン","あく","はがね")
         try {
             for (i in typeIdList.indices) {
                 Save(mRealm, typeIdList[i], typeNameList[i])
