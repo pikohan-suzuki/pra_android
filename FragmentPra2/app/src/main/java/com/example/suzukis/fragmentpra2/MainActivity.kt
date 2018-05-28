@@ -12,10 +12,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val manager = getFragmentManager()
-        val button =findViewById(R.id.button_main) as Button
+        val button = findViewById(R.id.button_main) as Button
 
-        button.setOnClickListener(){
-            fragmentManager.beginTransaction().replace(R.id.container,Fragment1.newInstance()).commit()
+        button.setOnClickListener() {
+            fragmentManager.beginTransaction().replace(R.id.container, Fragment1.newInstance()).commit()
         }
 
     }
