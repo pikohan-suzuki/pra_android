@@ -12,11 +12,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val manager = getFragmentManager()
-        val button = findViewById(R.id.button_main) as Button
+        val changeButton = findViewById(R.id.button_main) as Button
+        val AButton = findViewById(R.id.buttonA) as Button
+        val BButton = findViewById(R.id.buttonB) as Button
+        val CButton = findViewById(R.id.buttonC) as Button
 
-        button.setOnClickListener() {
+
+
+        val aMutableList : MutableList<String>
+        val aList : List<String>
+        val bArray : Array<String>
+
+
+        changeButton.setOnClickListener() {
             fragmentManager.beginTransaction().replace(R.id.container, Fragment1.newInstance()).commit()
         }
-
+        AButton.setOnClickListener(){
+            fragmentManager.beginTransaction().replace(R.id.container,Fragment2.newInstance()).commit()
+        }
+        BButton.setOnClickListener(){
+            fragmentManager.beginTransaction().replace(R.id.container,Fragment3.newInstance()).commit()
+        }
+        CButton.setOnClickListener(){
+            fragmentManager.beginTransaction().replace(R.id.container,Fragment1.newInstance()).commit()
+        }
     }
 }
