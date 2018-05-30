@@ -16,8 +16,10 @@ class SubActivity : AppCompatActivity() {
         val resultImageView = findViewById(R.id.resultImageView) as ImageView
         val historyButton = findViewById(R.id.historyButton) as Button
         val againButton = findViewById(R.id.againButton) as Button
-        println(randNum)
-        when (randNum.toInt().absoluteValue % 7) {
+        val result = randNum.toInt().absoluteValue % 7
+
+        Save(result)
+        when (result) {
             0 ->
                 resultImageView.setImageResource(R.drawable.daikyou)
             1 ->
@@ -37,5 +39,11 @@ class SubActivity : AppCompatActivity() {
         againButton.setOnClickListener(){
             finish()
         }
+    }
+    fun Save(result :Int){
+
+    }
+    fun Read(){
+
     }
 }
