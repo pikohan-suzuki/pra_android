@@ -6,5 +6,5 @@ import io.realm.annotations.RealmClass
 
 @RealmClass
 open class ResultData (@PrimaryKey open var id : Int =0,
-        open var result : String=""
+        open var result : String =""
     ) : RealmObject()
