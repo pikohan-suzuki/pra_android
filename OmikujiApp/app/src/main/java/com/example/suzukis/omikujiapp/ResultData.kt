@@ -5,6 +5,7 @@ import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
 @RealmClass
-open class ResultData (@PrimaryKey open var id : Int =0,
-        open var result : String =""
-    ) : RealmObject()
+open class ResultData(@PrimaryKey open var id: Int = 0,
+                      open var result: String = "",
+                      open var time: String = ""
+) : RealmObject()

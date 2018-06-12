@@ -18,11 +18,9 @@
             </intent-filter>
         </activity>
        <activity android:name=".SubActivity">
-
         </activity>
-        <activitiy android:name=".HistryActivity">
-
-        </activitiy>
+        <activity android:name=".HistryActivity">
+        </activity>
     </application>
 
 </manifest>

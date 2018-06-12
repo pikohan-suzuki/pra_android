@@ -6,16 +6,16 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.Button
 import android.widget.Toast
+import io.realm.Realm
 import java.util.*
 import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var rand = Random()
+        Realm.init(this)
+        val rand = Random()
         var randNum = rand.nextInt()
         val shuffleButton = findViewById(R.id.shuffleButton) as Button
         val drawButton = findViewById(R.id.drawButton) as Button

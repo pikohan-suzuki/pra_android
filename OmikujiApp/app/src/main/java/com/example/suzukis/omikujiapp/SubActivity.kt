@@ -3,24 +3,28 @@ package com.example.suzukis.omikujiapp
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.format.DateFormat
 import android.widget.Button
 import android.widget.ImageView
 import io.realm.Realm
+import java.util.*
 import kotlin.math.absoluteValue
 
 class SubActivity : AppCompatActivity() {
 
-    val mRealm: Realm = Realm.getDefaultInstance()
+    var mRealm: Realm= Realm.getDefaultInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub)
+
+
 
         val randNum = intent.getStringExtra("randNum")
         val resultImageView = findViewById(R.id.resultImageView) as ImageView
         val historyButton = findViewById(R.id.historyButton) as Button
         val againButton = findViewById(R.id.againButton) as Button
         val result = randNum.toInt().absoluteValue % 7
-        var resultStr: String =""
+        var resultStr: String = ""
 
         when (result) {
             0 -> {
@@ -57,26 +61,33 @@ class SubActivity : AppCompatActivity() {
         againButton.setOnClickListener() {
             finish()
         }
-        historyButton.setOnClickListener(){
-            val subIntent = Intent(this,HistryActivity::class.java)
+        historyButton.setOnClickListener() {
+            val subIntent = Intent(this, HistryActivity::class.java)
             startActivity(subIntent)
         }
+    }
+
+    fun Read(): List<ResultData> {
+        return mRealm.where(ResultData::class.java).findAll()
     }
 
     fun Save(result: String) {
         val maxId: Number? = mRealm.where(ResultData::class.java).max("id")
         val nextId: Int
+        val time:String
         if (maxId == null)
             nextId = 0
         else
             nextId = maxId.toInt() + 1
+
+        val date:Date = Date()
+        val calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"), Locale.JAPAN);
+        time= DateFormat.format("kk:mm:ss", date).toString()
+
         mRealm.executeTransaction {
             val resultData = mRealm.createObject(ResultData::class.java, nextId)
             resultData.result = result
+            resultData.time = time
         }
-    }
-
-    fun Read() {
-
     }
 }
