@@ -17,12 +17,10 @@ class SubActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub)
 
-
-
         val randNum = intent.getStringExtra("randNum")
-        val resultImageView = findViewById(R.id.resultImageView) as ImageView
-        val historyButton = findViewById(R.id.historyButton) as Button
-        val againButton = findViewById(R.id.againButton) as Button
+        val resultImageView = findViewById<ImageView>(R.id.resultImageView)
+        val historyButton = findViewById<Button>(R.id.historyButton)
+        val againButton = findViewById<Button>(R.id.againButton)
         val result = randNum.toInt().absoluteValue % 7
         var resultStr: String = ""
 
@@ -56,32 +54,31 @@ class SubActivity : AppCompatActivity() {
                 resultStr = "大吉"
             }
         }
-        Save(resultStr)
+        save(resultStr)
 
         againButton.setOnClickListener() {
             finish()
         }
-        historyButton.setOnClickListener() {
-            val subIntent = Intent(this, HistryActivity::class.java)
+        historyButton.setOnClickListener {
+            val subIntent = Intent(this, HistoryActivity::class.java)
             startActivity(subIntent)
         }
     }
 
-    fun Read(): List<ResultData> {
+    fun read(): List<ResultData> {
         return mRealm.where(ResultData::class.java).findAll()
     }
 
-    fun Save(result: String) {
+    fun save(result: String) {
         val maxId: Number? = mRealm.where(ResultData::class.java).max("id")
         val nextId: Int
         val time:String
-        if (maxId == null)
-            nextId = 0
+        nextId = if (maxId == null)
+            0
         else
-            nextId = maxId.toInt() + 1
+            maxId.toInt() + 1
 
-        val date:Date = Date()
-        val calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"), Locale.JAPAN);
+        val date = Date()
         time= DateFormat.format("kk:mm:ss", date).toString()
 
         mRealm.executeTransaction {

@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import android.widget.Button
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_history.*
 
-class HistryActivity : AppCompatActivity() {
+class HistoryActivity : AppCompatActivity() {
 
     lateinit var subAct : SubActivity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +16,7 @@ class HistryActivity : AppCompatActivity() {
 
         subAct = SubActivity()
 
-        val historyList :List<ResultData> = subAct.Read()
+        val historyList :List<ResultData> = subAct.read()
         val showHistoryList = mutableListOf<String>()
         val showTimeList= mutableListOf<String>()
 
@@ -31,7 +30,7 @@ class HistryActivity : AppCompatActivity() {
         resultListView.adapter = resultAdapter
         timeListView.adapter = timeAdapter
 
-        val returnSubButton = findViewById(R.id.returnSubButton) as Button
+        val returnSubButton = findViewById<Button>(R.id.returnSubButton)
         returnSubButton.setOnClickListener{
             finish()
         }

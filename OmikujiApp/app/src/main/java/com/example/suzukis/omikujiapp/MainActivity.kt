@@ -17,18 +17,18 @@ class MainActivity : AppCompatActivity() {
         Realm.init(this)
         val rand = Random()
         var randNum = rand.nextInt()
-        val shuffleButton = findViewById(R.id.shuffleButton) as Button
-        val drawButton = findViewById(R.id.drawButton) as Button
+        val shuffleButton = findViewById<Button>(R.id.shuffleButton)
+        val drawButton = findViewById<Button>(R.id.drawButton)
         val intent = Intent(this,SubActivity::class.java)
 
-        shuffleButton.setOnClickListener(){
+        shuffleButton.setOnClickListener{
             randNum = rand.nextInt()
             val toast = Toast.makeText(this,"中身を混ぜました。",Toast.LENGTH_LONG)
             toast.setGravity(Gravity.TOP,0,200)
             toast.show()
         }
 
-        drawButton.setOnClickListener(){
+        drawButton.setOnClickListener{
             intent.putExtra("randNum",randNum.toString())
             startActivity(intent)
             randNum=rand.nextInt()
