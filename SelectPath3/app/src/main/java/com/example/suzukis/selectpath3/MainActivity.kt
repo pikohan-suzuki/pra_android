@@ -15,11 +15,10 @@ import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
     var root = mutableListOf<Int>()
-    var sum = 0
-
     var streetSum = mutableListOf<Int>()
     var streetList1 = mutableListOf<Int>()
     var streetList2 = mutableListOf<Int>()
+    var streetFrom = mutableListOf<Int>()
     var numberOfStreet = 0
     var streetLengths = mutableListOf<Int>()
     var destination = 0
@@ -54,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         try {
             str = fileReader.readLine()
             while (str != null) {
-                streetSum[numberOfStreet] = 9999999
                 numberOfStreet++
                 streetLengths.add(str.toInt())
                 str = fileReader.readLine()
@@ -76,14 +74,27 @@ class MainActivity : AppCompatActivity() {
             val loca: String? = locationEditText.text.toString()
             val dest: String? = destinationEditText.text.toString()
             root.clear()
+            streetSum.clear()
+            streetFrom.clear()
+            for(j in 0 until numberOfStreet) {
+                streetSum.add(9999999)
+                streetFrom.add(0)
+            }
             if (loca != "" && dest != "") {
                 root.add(loca!!.toInt())
                 destination = dest!!.toInt()
+                streetSum[loca.toInt() - 1] = 0
                 search()
+                root.clear()
+                root.add(destination)
+                while(root[root.size-1]!=loca.toInt()){
+                    root.add(streetFrom[root[root.size -1]-1])
+                }
+                root = root.asReversed()
                 if (root[root.size - 1] == destination) {
                     Toast.makeText(this, "success", Toast.LENGTH_LONG).show()
                     Log.d("最短ルート", root.toString())
-                    Log.d("最短距離", sum.toString())
+                    Log.d("最短距離", streetSum[destination - 1].toString())
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_LONG).show()
                 }
@@ -98,45 +109,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun search() {
-        var i = streetIndex[root[root.size - 1]]
+        var i: Int
         var streetEnd: Int
-        var minId = 0
-        var minSum = 999999
+        var minSum: Int
+        var minId=0
         while (root[root.size - 1] != destination) {
+            i = streetIndex[root[root.size - 1] - 1]
             if (root[root.size - 1] == numberOfStreet) {
                 streetEnd = streetList1.size - 1
             } else {
-                streetEnd = streetIndex[root[root.size - 1] + 1] - 1
+                streetEnd = streetIndex[root[root.size - 1]] - 1
             }
             while (i <= streetEnd) {
                 if (!(root.contains(streetList2[i]))) {
-                    streetSum[streetList2[i]] = min(streetSum[streetList2[i]], streetSum[streetList1[i]] + streetLengths[streetList2[i] - 1])
-                    if (streetSum[streetList2[i]] < minSum) {
-                        minId = streetList2[i]
-                        minSum = streetSum[streetList2[i]]
+                    if(streetSum[streetList2[i] - 1] > streetSum[streetList1[i] - 1] + streetLengths[streetList2[i] - 1]){
+                        streetSum[streetList2[i]-1] =streetSum[streetList1[i] - 1] + streetLengths[streetList2[i] - 1]
+                        streetFrom[streetList2[i]-1]=streetList1[i]
                     }
+
                 }
                 i++
             }
+            minSum = 999999
+            for (k in streetSum.indices) {
+                if(!(root.contains(k+1)) && streetSum[k] < minSum){
+                    minSum = streetSum[k]
+                    minId =k+1
+                }
+            }
             root.add(minId)
-            sum+=streetLengths[minId-1]
         }
-    }
-}
-
-class Stack {
-    var elements = mutableListOf<Int>()
-    fun push(n: Int) {
-        elements.add(n)
-    }
-
-    fun pop(): Int {
-        val lastElement = elements[elements.size - 1]
-        elements.remove(elements.size - 1)
-        return lastElement
-    }
-
-    fun isEmpty(): Boolean {
-        return elements.size == 0
     }
 }
